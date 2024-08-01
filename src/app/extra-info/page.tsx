@@ -2,8 +2,6 @@ import { WowsVisualizer } from "@/components/WowVisualizer";
 import { getAllWows } from "@/lib/queries";
 import { Wow } from "@/lib/types";
 
-export const runtime = 'edge';
-
 const parseDurationToSeconds = (duration: string) => {
   // Duration format is HH:MM:SS
   const durationArray = duration.split(":");
@@ -25,7 +23,7 @@ const sortWowsByDuration = (wows: Wow[]) => {
 
 const sortWowsByReleaseDateAndCurrentWow = (wows: Wow[]) => {
   return wows.sort((a, b) => {
-    if (a.release_date === b.release_date) {
+    if (new Date(a.release_date).getTime() === new Date(b.release_date).getTime()) {
       return a.current_wow_in_movie - b.current_wow_in_movie;
     }
     return new Date(a.release_date).getTime() - new Date(b.release_date).getTime();
@@ -44,14 +42,21 @@ const getMedianWows = (wows: Wow[]) => {
   return medianWows;
 };
 
+const getFirstAndLastWows = (wows: Wow[]) => {
+  const sortedWows = sortWowsByReleaseDateAndCurrentWow(wows);
+  return [sortedWows[0], sortedWows[sortedWows.length - 1]];
+}
+
+const getLongerMovieWow = (wows: Wow[]) => {
+  const sortedWows = sortWowsByDuration(wows);
+  return sortedWows[sortedWows.length - 1];
+}
+
 export default async function ExtraInfoPage() {
   const wows = await getAllWows();
   const medianWows = getMedianWows(wows);
-  const sortedWowsByYearAndCurrentWow = sortWowsByReleaseDateAndCurrentWow(wows);
-  const firstWow = sortedWowsByYearAndCurrentWow[0];
-  const lastWow = sortedWowsByYearAndCurrentWow[sortedWowsByYearAndCurrentWow.length - 1];
-  const sortedWowsByDuration = sortWowsByDuration(wows);
-  const longerMovieWow = sortedWowsByDuration[sortedWowsByDuration.length - 1];
+  const [firstWow, lastWow] = getFirstAndLastWows(wows);
+  const longerMovieWow = getLongerMovieWow(wows);
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen py-2 ">
