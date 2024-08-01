@@ -3,6 +3,8 @@ import owenWilson from "../../public/owen-wilson.webp";
 import Link from "next/link";
 import { PlusIcon } from "@heroicons/react/16/solid";
 
+export const runtime = 'edge';
+
 interface LinkCardProps {
   href: string;
   title: string;

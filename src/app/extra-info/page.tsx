@@ -2,6 +2,8 @@ import { WowsVisualizer } from "@/components/WowVisualizer";
 import { getAllWows } from "@/lib/queries";
 import { Wow } from "@/lib/types";
 
+export const runtime = 'edge';
+
 const parseDurationToSeconds = (duration: string) => {
   // Duration format is HH:MM:SS
   const durationArray = duration.split(":");
