@@ -3,16 +3,20 @@
 import { BarsArrowDownIcon, BarsArrowUpIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 
-export const ElementsList = ({ elements,title }: { elements: string[]; title: string }) => {
-  const [order, setOrder] = useState<"asc" | "desc" | undefined>(undefined);
+export const ElementsList = ({
+  elements,
+  title,
+}: {
+  elements: string[];
+  title: string;
+}) => {
+  const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [sortedElements, setSortedElements] = useState(elements);
   useEffect(() => {
     if (order === "asc") {
       setSortedElements(elements.sort());
     } else if (order === "desc") {
       setSortedElements(elements.reverse());
-    } else {
-      setSortedElements(elements);
     }
   }, [elements, order]);
 
