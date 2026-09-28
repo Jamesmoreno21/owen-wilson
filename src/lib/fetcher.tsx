@@ -20,3 +20,14 @@ export const fetcher = async (path: string) => {
   const data = await res.json();
   return data;
 };
+
+export const fetchWithRetry = async (path: string, retries = 3): Promise<any> => {
+  try {
+    return await fetcher(path);
+  } catch (e) {
+    if (retries > 0) {
+      return fetchWithRetry(path, retries);
+    }
+    throw e;
+  }
+};

@@ -1,5 +1,5 @@
 import { Wow } from "./types";
-import { fetcher } from "./fetcher";
+import { fetchWithRetry as fetcher } from "./fetcher";
 
 export async function getMovies() {
   const res = await fetcher("/movies");
