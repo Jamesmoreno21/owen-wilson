@@ -14,7 +14,7 @@ export const fetcher = async (path: string) => {
       },
     }
   );
-  if (res.status > 400) {
+  if (!res.ok) {
     throw new FetchError(res.status, "Request failed: " + path);
   }
   const data = await res.json();
