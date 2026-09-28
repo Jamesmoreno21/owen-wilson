@@ -14,9 +14,9 @@ export const ElementsList = ({
   const [sortedElements, setSortedElements] = useState(elements);
   useEffect(() => {
     if (order === "asc") {
-      setSortedElements(elements.sort());
+      setSortedElements([...elements].sort());
     } else if (order === "desc") {
-      setSortedElements(elements.reverse());
+      setSortedElements(elements.toSorted().toReversed());
     }
   }, [elements, order]);
 
@@ -43,7 +43,7 @@ export const ElementsList = ({
       <div className="flex flex-col divide-y divide-gray-300">
         {sortedElements.map((movie, index) => (
           <div
-            key={index}
+            key={movie}
             className="flex flex-row items-center justify-between p-4"
           >
             <h1 className="text-lg">
