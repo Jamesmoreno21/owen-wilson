@@ -14,9 +14,9 @@ export const ElementsList = ({
   const [sortedElements, setSortedElements] = useState(elements);
   useEffect(() => {
     if (order === "asc") {
-      setSortedElements(elements.sort());
+      setSortedElements([...elements].sort());
     } else if (order === "desc") {
-      setSortedElements(elements.reverse());
+      setSortedElements(elements.toSorted().toReversed());
     }
   }, [elements, order]);
 
